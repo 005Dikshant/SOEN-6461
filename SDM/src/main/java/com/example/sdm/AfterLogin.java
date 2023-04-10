@@ -14,6 +14,7 @@ import javafx.scene.paint.Color;
 
 import java.io.File;
 import java.io.IOException;
+import java.text.DecimalFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
@@ -68,13 +69,15 @@ public class AfterLogin {
 
     public double currentUserBalance = 0.99;
 
+    DecimalFormat decimalFormat = new DecimalFormat("#.##");
+
 
     HomeController homeController = new HomeController();
 
     public void initialize() {
         occupancySelectionType();
         welcomeMessageText.setText("Welcome, " + (homeController.tempUserName).toUpperCase());
-        currentBalanceText.setText(currentUserBalance + " $");
+        currentBalanceText.setText(decimalFormat.format(currentUserBalance) + " $");
     }
 
     private void occupancySelectionType() {
@@ -198,7 +201,7 @@ public class AfterLogin {
 
         if(amount  != -1){
 
-            message = "You have been charged " + amount + "$ for " + (checkTravelType == true ? " 2 Way" : " 1 Way");
+            message = "You have been charged " + decimalFormat.format(amount) + "$ for " + (checkTravelType == true ? " 2 Way" : " 1 Way");
 
             alert.setTitle("Success Dialog");
             alert.setHeaderText(message);
@@ -244,6 +247,7 @@ public class AfterLogin {
         }
         createDialog(amount);
         if(amount != -1){
+            currentUserBalance -= amount;
 
             loadData(amount);
         }
@@ -274,11 +278,18 @@ public class AfterLogin {
         return matcher.matches();
     }
 
+    public void showAmountStatus(){
+
+        currentBalanceText.setText(decimalFormat.format(currentUserBalance )+ " $");
+        responseMessageText.setText("");
+        addMoneyText.setText("");
+    }
+
     public void addMoney(){
         String money = addMoneyText.getText().toString();
         if(validateAddedMoney(money)){
             currentUserBalance += Integer.parseInt(money);
-            currentBalanceText.setText(currentUserBalance + " $");
+            currentBalanceText.setText(decimalFormat.format(currentUserBalance ) + " $");
             responseMessageText.setText("Account has been successfully credited !");
             responseMessageText.setTextFill(Color.GREEN);
         }else{

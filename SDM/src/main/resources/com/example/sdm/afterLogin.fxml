@@ -22,7 +22,7 @@
    <children>
       <TabPane prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
-            <Tab text="Home">
+            <Tab onSelectionChanged="#showAmountStatus" text="Home">
                <content>
                   <AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: white;">
                      <children>
