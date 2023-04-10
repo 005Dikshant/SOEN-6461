@@ -11,6 +11,8 @@
 <?import javafx.scene.control.TableColumn?>
 <?import javafx.scene.control.TableView?>
 <?import javafx.scene.control.TextField?>
+<?import javafx.scene.image.Image?>
+<?import javafx.scene.image.ImageView?>
 <?import javafx.scene.layout.AnchorPane?>
 <?import javafx.scene.layout.HBox?>
 <?import javafx.scene.layout.VBox?>
@@ -20,6 +22,50 @@
    <children>
       <TabPane prefHeight="400.0" prefWidth="600.0" tabClosingPolicy="UNAVAILABLE">
         <tabs>
+            <Tab text="Home">
+               <content>
+                  <AnchorPane prefHeight="400.0" prefWidth="600.0" style="-fx-background-color: white;">
+                     <children>
+                        <Label fx:id="welcomeMessageText" layoutX="60.0" layoutY="73.0" prefHeight="31.0" prefWidth="294.0" textFill="#2f87f2">
+                           <font>
+                              <Font name="Apple Braille Outline 6 Dot" size="18.0" />
+                           </font>
+                           <padding>
+                              <Insets left="5.0" />
+                           </padding>
+                        </Label>
+                        <Button layoutX="434.0" layoutY="313.0" mnemonicParsing="false" onAction="#userLogOut" prefHeight="39.0" prefWidth="133.0" style="-fx-background-color: #393E46;" text="Log Out" textFill="#eeeeee" />
+                        <Label layoutX="72.0" layoutY="131.0" prefHeight="31.0" prefWidth="111.0" text="Current Balance:">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <Label fx:id="currentBalanceText" layoutX="174.0" layoutY="133.0" prefHeight="27.0" prefWidth="126.0">
+                           <padding>
+                              <Insets left="5.0" />
+                           </padding>
+                        </Label>
+                        <Label layoutX="72.0" layoutY="183.0" prefHeight="27.0" prefWidth="87.0" text="Add Balance:">
+                           <font>
+                              <Font size="14.0" />
+                           </font>
+                        </Label>
+                        <ImageView fitHeight="175.0" fitWidth="202.0" layoutX="365.0" layoutY="59.0">
+                           <image>
+                              <Image url="@icon.png" />
+                           </image>
+                        </ImageView>
+                        <Label fx:id="responseMessageText" layoutX="82.0" layoutY="283.0" prefHeight="43.0" prefWidth="338.0" textFill="#11d365" />
+                        <Button layoutX="174.0" layoutY="234.0" mnemonicParsing="false" onAction="#addMoney" prefHeight="31.0" prefWidth="126.0" style="-fx-background-color: #393E46;" text="Add " textFill="#eeeeee">
+                           <font>
+                              <Font size="18.0" />
+                           </font>
+                        </Button>
+                        <TextField fx:id="addMoneyText" layoutX="171.0" layoutY="183.0" promptText="0.0$" />
+                     </children>
+                  </AnchorPane>
+               </content>
+            </Tab>
           <Tab text="Get Ticket">
                <content>
                   <ScrollPane prefHeight="200.0" prefWidth="200.0">

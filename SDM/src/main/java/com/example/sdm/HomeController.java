@@ -23,14 +23,16 @@ public class HomeController {
     @FXML
     private PasswordField password;
 
+    public String tempUserName = "dikshant";
+    public String tempPassword = "123";
+
     public void userLogIn(ActionEvent event) throws IOException{
         checkLogIn();
     }
 
     public void checkLogIn() throws IOException{
 
-        String tempUserName = "dikshant";
-        String tempPassword = "123";
+
 
         Main m = new Main();
         if(username.getText().toString().equals(tempUserName) && password.getText().toString().equals(tempPassword)){

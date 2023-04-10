@@ -10,6 +10,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.*;
 import javafx.scene.image.Image;
 import javafx.scene.image.ImageView;
+import javafx.scene.paint.Color;
 
 import java.io.File;
 import java.io.IOException;
@@ -17,6 +18,8 @@ import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.Optional;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 public class AfterLogin {
 
@@ -56,8 +59,22 @@ public class AfterLogin {
     @FXML TableColumn<customer, String> columnEndDate;
     @FXML TableColumn<customer, String> columnType;
 
+    @FXML private Label welcomeMessageText;
+    @FXML private Label currentBalanceText;
+
+    @FXML private Label responseMessageText;
+
+    @FXML private TextField addMoneyText;
+
+    public double currentUserBalance = 0.99;
+
+
+    HomeController homeController = new HomeController();
+
     public void initialize() {
         occupancySelectionType();
+        welcomeMessageText.setText("Welcome, " + (homeController.tempUserName).toUpperCase());
+        currentBalanceText.setText(currentUserBalance + " $");
     }
 
     private void occupancySelectionType() {
@@ -174,6 +191,42 @@ public class AfterLogin {
 
     }
 
+    public void createDialog(double amount){
+
+        String message;
+        Alert alert = new Alert(Alert.AlertType.ERROR);
+
+        if(amount  != -1){
+
+            message = "You have been charged " + amount + "$ for " + (checkTravelType == true ? " 2 Way" : " 1 Way");
+
+            alert.setTitle("Success Dialog");
+            alert.setHeaderText(message);
+            alert.setContentText("Thanks for choosing us.");
+
+            Image tickImage = new Image(getClass().getResourceAsStream("tick.png"));
+            ImageView tickMark = new ImageView(tickImage);
+            tickMark.setFitHeight(30);
+            tickMark.setFitWidth(30);
+            alert.setGraphic(tickMark);
+
+
+        }else{
+            message = "Not sufficient balance, please recharge the account.";
+            alert.setTitle("Error Dialog");
+            alert.setHeaderText(message);
+            alert.setContentText("Contact Us, for further assistance, email at iGoHelpPayment@Stm");
+        }
+
+        Optional<ButtonType> result = alert.showAndWait();
+        if (result.get() == ButtonType.OK){
+            // user clicked OK
+        } else {
+            // user clicked Cancel or closed the dialog
+        }
+
+    }
+
     public void userPay(ActionEvent event) throws IOException {
 
         oneWayType.setToggleGroup(toggleGroup);
@@ -185,25 +238,14 @@ public class AfterLogin {
         wrongLabel.setText("");
 
         double amount = doTransaction();
-        loadData(amount);
+        if(amount > currentUserBalance){
+            amount = -1;
 
+        }
+        createDialog(amount);
+        if(amount != -1){
 
-        Alert alert = new Alert(Alert.AlertType.WARNING);
-        alert.setTitle("Success Dialog");
-        alert.setHeaderText("You have been charged " + amount + "$ for " + (checkTravelType == true ? " 2 Way" : " 1 Way"));
-        alert.setContentText("Thanks for choosing us.");
-
-        Image tickImage = new Image(getClass().getResourceAsStream("tick.png"));
-        ImageView tickMark = new ImageView(tickImage);
-        tickMark.setFitHeight(30);
-        tickMark.setFitWidth(30);
-        alert.setGraphic(tickMark);
-
-        Optional<ButtonType> result = alert.showAndWait();
-        if (result.get() == ButtonType.OK){
-            // user clicked OK
-        } else {
-            // user clicked Cancel or closed the dialog
+            loadData(amount);
         }
 
     }
@@ -225,5 +267,24 @@ public class AfterLogin {
         ticketsComboBox.setValue("1");
     }
 
+    public boolean validateAddedMoney(String money){
+
+        Pattern amount_pattern = Pattern.compile("^-?(?:0|[1-9]\\d{0,2}(?:,?\\d{3})*)(?:\\.\\d{1,2})?$");
+        Matcher matcher = amount_pattern.matcher(money);
+        return matcher.matches();
+    }
+
+    public void addMoney(){
+        String money = addMoneyText.getText().toString();
+        if(validateAddedMoney(money)){
+            currentUserBalance += Integer.parseInt(money);
+            currentBalanceText.setText(currentUserBalance + " $");
+            responseMessageText.setText("Account has been successfully credited !");
+            responseMessageText.setTextFill(Color.GREEN);
+        }else{
+            responseMessageText.setText("Invalid amount entered !!");
+            responseMessageText.setTextFill(Color.RED);
+        }
+    }
 
 }
