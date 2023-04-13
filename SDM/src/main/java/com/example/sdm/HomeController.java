@@ -8,6 +8,7 @@ import javafx.scene.control.PasswordField;
 import javafx.scene.control.TextField;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 public class HomeController {
 
@@ -23,8 +24,11 @@ public class HomeController {
     @FXML
     private PasswordField password;
 
-    public String tempUserName = "dikshant";
-    public String tempPassword = "123";
+    ArrayList<Credentials> credentialsArrayList = new ArrayList<>();
+
+
+    public static String tempUserName = "";
+    public static String tempPassword = "";
 
     public void userLogIn(ActionEvent event) throws IOException{
         checkLogIn();
@@ -32,17 +36,30 @@ public class HomeController {
 
     public void checkLogIn() throws IOException{
 
-
+        credentialsArrayList.add(new Credentials("john", "123456"));
+        credentialsArrayList.add(new Credentials("dikshant", "123456"));
+        credentialsArrayList.add(new Credentials("zangwen", "123456"));
+        credentialsArrayList.add(new Credentials("yang", "123456"));
+        credentialsArrayList.add(new Credentials("mansa", "123456"));
+        credentialsArrayList.add(new Credentials("manaswini", "123456"));
 
         Main m = new Main();
-        if(username.getText().toString().equals(tempUserName) && password.getText().toString().equals(tempPassword)){
-            wrongLogIn.setText("Success!");
-            m.changeScene("afterLogin.fxml");
-        }else if(username.getText().toString().isEmpty() && password.getText().toString().isEmpty()){
-            wrongLogIn.setText("Empty Credentials");
-        }else{
-            wrongLogIn.setText("Wrong username or password");
+
+        for(Credentials credential : credentialsArrayList){
+            tempUserName = credential.username;
+            tempPassword = credential.password;
+
+            if(username.getText().toString().equals(tempUserName) && password.getText().toString().equals(tempPassword)){
+                wrongLogIn.setText("Success!");
+                m.changeScene("afterLogin.fxml");
+            }else if(username.getText().toString().isEmpty() && password.getText().toString().isEmpty()){
+                wrongLogIn.setText("Empty Credentials");
+            }else{
+                wrongLogIn.setText("Wrong username or password");
+            }
+
         }
+
     }
 
 

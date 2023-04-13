@@ -72,11 +72,11 @@ public class AfterLogin {
     DecimalFormat decimalFormat = new DecimalFormat("#.##");
 
 
-    HomeController homeController = new HomeController();
+    //HomeController homeController = new HomeController();
 
     public void initialize() {
         occupancySelectionType();
-        welcomeMessageText.setText("Welcome, " + (homeController.tempUserName).toUpperCase());
+        welcomeMessageText.setText("Welcome, " + (HomeController.tempUserName).toUpperCase());
         currentBalanceText.setText(decimalFormat.format(currentUserBalance) + " $");
     }
 
@@ -288,7 +288,7 @@ public class AfterLogin {
     public void addMoney(){
         String money = addMoneyText.getText().toString();
         if(validateAddedMoney(money)){
-            currentUserBalance += Integer.parseInt(money);
+            currentUserBalance += Double.parseDouble(money);
             currentBalanceText.setText(decimalFormat.format(currentUserBalance ) + " $");
             responseMessageText.setText("Account has been successfully credited !");
             responseMessageText.setTextFill(Color.GREEN);
