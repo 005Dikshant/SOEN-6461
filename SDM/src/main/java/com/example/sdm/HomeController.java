@@ -30,24 +30,27 @@ public class HomeController {
     public static String tempUserName = "";
     public static String tempPassword = "";
 
+    public static double amount = 0.00;
+
     public void userLogIn(ActionEvent event) throws IOException{
         checkLogIn();
     }
 
     public void checkLogIn() throws IOException{
 
-        credentialsArrayList.add(new Credentials("john", "123456"));
-        credentialsArrayList.add(new Credentials("dikshant", "123456"));
-        credentialsArrayList.add(new Credentials("zangwen", "123456"));
-        credentialsArrayList.add(new Credentials("yang", "123456"));
-        credentialsArrayList.add(new Credentials("mansa", "123456"));
-        credentialsArrayList.add(new Credentials("manaswini", "123456"));
+        credentialsArrayList.add(new Credentials("john", "123456",0.99));
+        credentialsArrayList.add(new Credentials("dikshant", "123456",10.12));
+        credentialsArrayList.add(new Credentials("zangwen", "123456", 5.49));
+        credentialsArrayList.add(new Credentials("yang", "123456", 1.11));
+        credentialsArrayList.add(new Credentials("mansa", "123456",4.22));
+        credentialsArrayList.add(new Credentials("manaswini", "123456", 6.34));
 
         Main m = new Main();
 
         for(Credentials credential : credentialsArrayList){
             tempUserName = credential.username;
             tempPassword = credential.password;
+            amount = credential.amount;
 
             if(username.getText().toString().equals(tempUserName) && password.getText().toString().equals(tempPassword)){
                 wrongLogIn.setText("Success!");

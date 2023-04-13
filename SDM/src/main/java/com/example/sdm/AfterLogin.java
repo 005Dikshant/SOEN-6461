@@ -67,7 +67,7 @@ public class AfterLogin {
 
     @FXML private TextField addMoneyText;
 
-    public double currentUserBalance = 0.99;
+    public double currentUserBalance = 0.00;
 
     DecimalFormat decimalFormat = new DecimalFormat("#.##");
 
@@ -77,6 +77,7 @@ public class AfterLogin {
     public void initialize() {
         occupancySelectionType();
         welcomeMessageText.setText("Welcome, " + (HomeController.tempUserName).toUpperCase());
+        currentUserBalance = HomeController.amount;
         currentBalanceText.setText(decimalFormat.format(currentUserBalance) + " $");
     }
 
